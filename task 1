@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        main {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quiz-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input, select {
+            margin: 5px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        .hidden {
+            display: none;
+        }
+        .question-box {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .question-box h3 {
+            margin-bottom: 10px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 600px) {
+            header {
+                font-size: 20px;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Quiz Maker</h1>
+        <nav>
+            <button onclick="showSection('home')">Home</button>
+            <button onclick="showSection('create-quiz')">Create Quiz</button>
+            <button onclick="showSection('take-quiz')">Take Quiz</button>
+        </nav>
+    </header>
+    <main>
+        <div id="home" class="container">
+            <h2>Welcome to the Online Quiz Maker</h2>
+            <p>Create and take quizzes with ease!</p>
+        </div>
+        <div id="create-quiz" class="container hidden">
+            <h2>Create a New Quiz</h2>
+            <form id="quizForm">
+                <div id="questionContainer">
+                    <div class="quiz-item">
+                        <label for="question1">Question 1:</label>
+                        <input type="text" id="question1" name="question1" placeholder="Enter your question">
+                        <label for="options1">Options:</label>
+                        <input type="text" name="option1_1" placeholder="Option 1">
+                        <input type="text" name="option1_2" placeholder="Option 2">
+                        <input type="text" name="option1_3" placeholder="Option 3">
+                        <input type="text" name="option1_4" placeholder="Option 4">
+                        <label for="correct1">Correct Answer:</label>
+                        <select id="correct1" name="correct1">
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                            <option value="4">Option 4</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" onclick="addQuestion()">Add Question</button>
+                <button type="button" onclick="saveQuiz()">Save Quiz</button>
+            </form>
+        </div>
+        <div id="take-quiz" class="container hidden">
+            <h2>Available Quizzes</h2>
+            <div id="quizContent">
+                <div class="question-box">
+                    <h3>1. Who is the current Prime Minister of India?</h3>
+                    <div class="options">
+                        <button onclick="checkAnswer(this, 'correct')">A. Narendra Modi</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">B. Rahul Gandhi</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">C. Arvind Kejriwal</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">D. Amit Shah</button>
+                    </div>
+                </div>
+                <div class="question-box">
+                    <h3>2. What is the capital city of India?</h3>
+                    <div class="options">
+                        <button onclick="checkAnswer(this, 'correct')">A. New Delhi</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">B. Mumbai</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">C. Kolkata</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">D. Chennai</button>
+                    </div>
+                </div>
+                <div class="question-box">
+                    <h3>3. Which year did India gain independence?</h3>
+                    <div class="options">
+                        <button onclick="checkAnswer(this, 'correct')">A. 1947</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">B. 1950</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">C. 1945</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">D. 1935</button>
+                    </div>
+                </div>
+                <div class="question-box">
+                    <h3>4. What is the national animal of India?</h3>
+                    <div class="options">
+                        <button onclick="checkAnswer(this, 'correct')">A. Tiger</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">B. Elephant</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">C. Peacock</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">D. Lion</button>
+                    </div>
+                </div>
+                <div class="question-box">
+                    <h3>5. Who wrote the Indian national anthem?</h3>
+                    <div class="options">
+                        <button onclick="checkAnswer(this, 'correct')">A. Rabindranath Tagore</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">B. Bankim Chandra Chatterjee</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">C. Subhash Chandra Bose</button>
+                        <button onclick="checkAnswer(this, 'incorrect')">D. Mahatma Gandhi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('main > div').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function checkAnswer(button, status) {
+            if (status === 'correct') {
+                button.style.backgroundColor = '#4CAF50';
+                alert('Correct!');
+            } else {
+                button.style.backgroundColor = '#f44336';
+                alert('Incorrect. Try again!');
+            }
+        }
+    </script>
+</body>
+</html>
